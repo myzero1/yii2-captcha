@@ -1,4 +1,4 @@
-yii2-upload
+yii2-captcha
 ========================
 
 You can upload file,Just a add a widget to view.
