@@ -1,0 +1,23 @@
+{
+    "name": "myzero1/yii2-upload",
+    "description": "Upload for yii2 app",
+    "type": "yii2-module",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Xuanwu Qin",
+            "email": "myzero1@sina.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "trntv/yii2-file-kit": "^1.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.5.0",
+        "creocoder/yii2-flysystem": "~0.8"
+    },
+    "autoload": {
+        "psr-4": { "myzero1\\yii2upload\\": "src/" }
+    }
+}
