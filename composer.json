@@ -18,6 +18,6 @@
         "creocoder/yii2-flysystem": "~0.8"
     },
     "autoload": {
-        "psr-4": { "myzero1\\yii2upload\\": "src/" }
+        "psr-4": { "myzero1\\captcha\\": "src/" }
     }
 }
