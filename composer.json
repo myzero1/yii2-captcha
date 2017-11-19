@@ -1,5 +1,5 @@
 {
-    "name": "myzero1/yii2-upload",
+    "name": "myzero1/yii2-captcha",
     "description": "Upload for yii2 app",
     "type": "yii2-module",
     "license": "BSD-3-Clause",
