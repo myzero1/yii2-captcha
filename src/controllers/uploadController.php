@@ -1,10 +1,10 @@
 <?php
 
-namespace myzero1\yii2upload\controllers;
+namespace myzero1\captcha\controllers;
 
 
 use yii\web\Controller;
-use myzero1\yii2upload\components\UploadHandler;
+use myzero1\captcha\components\UploadHandler;
 
 /**
  * Default controller for the `tools` module

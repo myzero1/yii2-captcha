@@ -3,7 +3,7 @@
  * Author: Eugine Terentev <eugine@terentev.net>
  */
 
-namespace myzero1\yii2upload\widget\upload;
+namespace myzero1\captcha\widget\upload;
 
 use Yii;
 use yii\base\InvalidParamException;
@@ -67,7 +67,7 @@ class Upload extends InputWidget
     /**
      * @var string
      */
-    public $messagesCategory = 'myzero1\yii2upload';
+    public $messagesCategory = 'myzero1\captcha';
     /**
      * @var bool preview image file or not in the upload box.
      */
@@ -89,11 +89,11 @@ class Upload extends InputWidget
         if (!$this->url) {
             foreach (Yii::$app->getModules() as $key => $mModule) {
                 if (is_array($mModule)) {
-                    if (trim($mModule['class'], '\\') == 'myzero1\yii2upload\Tools') {
+                    if (trim($mModule['class'], '\\') == 'myzero1\captcha\Tools') {
                         $moduleId = $key;
                     }
                 } else {
-                    if (trim($mModule::className(), '\\') == 'myzero1\yii2upload\Tools') {
+                    if (trim($mModule::className(), '\\') == 'myzero1\captcha\Tools') {
                         $moduleId = $mModule->id;
                     }
                 }

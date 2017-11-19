@@ -1,6 +1,6 @@
 <?php
 
-namespace myzero1\yii2upload;
+namespace myzero1\captcha;
 
 /**
  * tools module definition class
@@ -10,7 +10,7 @@ class Tools extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'myzero1\yii2upload\controllers';
+    public $controllerNamespace = 'myzero1\captcha\controllers';
 
     /**
      * @ array

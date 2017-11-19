@@ -1,5 +1,5 @@
 <?php
-namespace myzero1\yii2upload\widget\upload;
+namespace myzero1\captcha\widget\upload;
 //upload
 use yii\web\AssetBundle;
 

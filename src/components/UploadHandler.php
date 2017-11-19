@@ -1,6 +1,6 @@
 <?php
 
-namespace myzero1\yii2upload\components;
+namespace myzero1\captcha\components;
 /*
  * jQuery File Upload Plugin PHP Class
  * https://github.com/blueimp/jQuery-File-Upload

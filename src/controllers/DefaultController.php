@@ -1,6 +1,6 @@
 <?php
 
-namespace myzero1\yii2upload\controllers;
+namespace myzero1\captcha\controllers;
 
 use yii\web\Controller;
 

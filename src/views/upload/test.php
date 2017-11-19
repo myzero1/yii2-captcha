@@ -3,7 +3,7 @@
 
 $model = new \common\models\User();
 
-echo \myzero1\yii2upload\widget\upload\Upload::widget([
+echo \myzero1\captcha\widget\upload\Upload::widget([
     'model' => $model,
     'attribute' => 'id',
     // 'url' => ['/tools/upload/upload'], // default ['/tools/upload/upload'],

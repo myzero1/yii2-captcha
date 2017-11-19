@@ -1,5 +1,5 @@
 <?php
-namespace myzero1\yii2upload\widget\upload;
+namespace myzero1\captcha\widget\upload;
 
 use yii\web\AssetBundle;
 
@@ -22,6 +22,6 @@ class BlueimpFileuploadAsset extends AssetBundle
 
     public $depends = [
         'yii\web\JqueryAsset',
-        '\myzero1\yii2upload\widget\upload\BlueimpLoadImageAsset'
+        '\myzero1\captcha\widget\upload\BlueimpLoadImageAsset'
     ];
 }
