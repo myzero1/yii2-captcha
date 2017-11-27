@@ -1,11 +1,14 @@
 <?php
 
-namespace myzero1\pms\behaviors;
+namespace myzero1\captcha\behaviors;
 
 use Yii;
 use yii\base\Behavior;
 use yii\base\Controller;
 use yii\web\BadRequestHttpException;
+use Gregwar\Captcha\CaptchaBuilder;
+
+
 
 /**
  * Class PreventMultipleSubmissionsBehavior
@@ -33,28 +36,34 @@ class PreventMultipleSubmissionsBehavior extends Behavior
      */
     public function beforeAction()
     {
-        // Add the js to prevent multiple submissions.
-        \Yii::$app->view->registerAssetBundle('myzero1\pms\assets\PreMulSubmissionsAsset');
-
         if (!in_array(Yii::$app->request->method, ['GET', 'HEAD', 'OPTIONS'], true)) {
 
-            if (!in_array(\Yii::$app->requestedRoute, $this->excludedRoutes)) {
-                $lastActionParamsHash = md5(json_encode(Yii::$app->request->post()));
-                $lastActionParamsHashSession = Yii::$app->getSession()->get('lastActionParamsHash', false);
-                file_put_contents('log', json_encode(Yii::$app->request->post()) . "_json\n", FILE_APPEND);
-                file_put_contents('log', $lastActionParamsHashSession . "_session\n", FILE_APPEND);
-                file_put_contents('log', $lastActionParamsHash . "_hash\n", FILE_APPEND);
-                if ($lastActionParamsHash == $lastActionParamsHashSession) {
-                    $action = Yii::$app->controller->action;
-                    if(!$action instanceof \yii\web\ErrorAction) {
-                        throw new BadRequestHttpException(Yii::t('yii', 'Please do not repeat the submission.'));
-                    } else {
-                        # will finish it.
-                    }
+            $model = new \myzero1\captcha\models\Captcha();
+
+            $url = '/' . \Yii::$app->requestedRoute;
+
+            // Header("Location: $url");
+            Yii::$app->getSession()->setFlash('success', '保存成功');
+            \Yii::$app->response->redirect($url)->send();
+
+            return Yii::$app->controller->redirect('/' . \Yii::$app->requestedRoute);
+
+                // var_dump(\Yii::$app->requestedRoute);exit;
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            } else {
+                var_dump(\Yii::$app->requestedRoute);exit;
+
+                $action = Yii::$app->controller->action;
+                if(!$action instanceof \yii\web\ErrorAction) {
+                    throw new BadRequestHttpException(Yii::t('yii', 'Please do not repeat the submission.'));
                 } else {
-                    Yii::$app->getSession()->set('lastActionParamsHash', $lastActionParamsHash);
+                    # will finish it.
                 }
             }
+
+            // var_dump('expression');exit;
         }
+        return false;
     }
 }
