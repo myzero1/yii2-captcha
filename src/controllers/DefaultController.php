@@ -5,7 +5,7 @@ namespace myzero1\captcha\controllers;
 use yii\web\Controller;
 
 /**
- * Default controller for the `tools` module
+ * Default controller for the `captcha` module
  */
 class DefaultController extends Controller
 {

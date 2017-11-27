@@ -3,7 +3,7 @@
 namespace myzero1\captcha;
 
 /**
- * tools module definition class
+ * captcha module definition class
  */
 class Captcha extends \yii\base\Module
 {
@@ -20,6 +20,5 @@ class Captcha extends \yii\base\Module
         parent::init();
 
         // custom initialization code goes here
-
     }
 }
