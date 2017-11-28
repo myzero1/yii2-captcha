@@ -98,8 +98,8 @@ echo  $form
 ```
 
 The scenario discretion
--php: Just validate by PHP.
--jsPhp: validate by JS and PHP
+- php: Just validate by PHP.
+- jsPhp: validate by JS and PHP
 
 You can access Demo through the following URL:
 
