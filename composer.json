@@ -1,6 +1,6 @@
 {
     "name": "myzero1/yii2-captcha",
-    "description": "Simple captcha for yii2 app",
+    "description": "Simple captcha for yii2.Just add the module in config file and use the widget.",
     "type": "yii2-module",
     "license": "MIT ",
     "authors": [
