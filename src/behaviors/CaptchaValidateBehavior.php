@@ -5,8 +5,6 @@ namespace myzero1\captcha\behaviors;
 use Yii;
 use yii\base\Behavior;
 use yii\base\Controller;
-use yii\web\BadRequestHttpException;
-use Gregwar\Captcha\CaptchaBuilder;
 use yii\helpers\Json;
 
 
@@ -17,10 +15,6 @@ use yii\helpers\Json;
  */
 class CaptchaValidateBehavior extends Behavior
 {
-    /**
-     * @var array  ['site/index', 'site/login']
-     */
-    public $excludedRoutes = [];
 
     /**
      * @return array
@@ -38,9 +32,7 @@ class CaptchaValidateBehavior extends Behavior
     public function beforeAction()
     {
         if (in_array(Yii::$app->request->method, ['POST'], true)) {
-            // var_dump('expression');exit;
             $model = new \myzero1\captcha\models\Captcha();
-            // $model->scenario = 'beforeAction';
             $model->scenario = 'jsPhp';
 
             $post = Yii::$app->request->post();
