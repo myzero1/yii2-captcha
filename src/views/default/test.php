@@ -6,6 +6,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Affiche */
 /* @var $form yii\widgets\ActiveForm */
+
+$model = new backend\models\LoginForm();
 ?>
 
 <div class="affiche-form">
@@ -21,9 +23,21 @@ use yii\widgets\ActiveForm;
 
         <div class="box-body">
 
-        <?= $form->field(\Yii::$app->params['captchaModel'],'test')->textInput() ?>
+        <?= $form->field($model,'username')->textInput() ?>
 
-  	<?= $form->field(\Yii::$app->params['captchaModel'],'verifyCode')->widget(myzero1\captcha\widgets\Captcha::className()
+<?php
+// $model2 = new \myzero1\captcha\models\Captcha(['scenario'=>'php']);
+// $model2 = new \myzero1\captcha\models\Captcha();
+
+// var_dump($model2);
+
+// $model2->scenario = 'onlyPHP';
+
+// var_dump($model2);
+
+?>
+
+  	<?= $form->field(new \myzero1\captcha\models\Captcha(['scenario'=>'jsPhp']),'verifyCode')->widget(myzero1\captcha\widgets\Captcha::className()
                                         ,['captchaAction'=>'/captcha/default/captcha',
                                         'imageOptions'=>['alt'=>'点击换图','title'=>'点击换图', 'style'=>'cursor:pointer']]);?>
 
@@ -31,7 +45,7 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="box-footer">
             <div class="form-group form-group-box">
-            	    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            	    <?= Html::submitButton(1 ? 'Create' : 'Update', ['class' => 1 ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
         </div>
         <?php ActiveForm::end(); ?>

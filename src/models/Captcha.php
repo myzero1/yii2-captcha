@@ -18,8 +18,8 @@ class Captcha extends Model
     public function rules()
     {
         return [
-            ['test','required'],
-            ['verifyCode', 'captcha', 'captchaAction'=>'/captcha/default/captcha'],
+            ['verifyCode','required', 'on' => 'php'],
+            ['verifyCode', 'captcha', 'captchaAction'=>'/captcha/default/captcha', 'on' => 'jsPhp'],
         ];
     }
 

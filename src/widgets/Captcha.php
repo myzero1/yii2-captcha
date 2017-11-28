@@ -94,10 +94,7 @@ class Captcha extends InputWidget
         parent::init();
 
         static::checkRequirements();
-        if(Yii::$app->getSession()->getFlash('success')){
 
-var_dump(Yii::$app->getSession()->getFlash('success'));exit;
-        }
         if (!isset($this->imageOptions['id'])) {
             $this->imageOptions['id'] = $this->options['id'] . '-image';
         }
@@ -134,6 +131,28 @@ var_dump(Yii::$app->getSession()->getFlash('success'));exit;
         $view = $this->getView();
         CaptchaAsset::register($view);
         $view->registerJs("jQuery('#$id').yiiCaptcha($options);");
+
+        //add by myzero1 for fill the input
+        if (Yii::$app->getSession()->getFlash('captcha_form_data')) {
+            $captcha_form_data = Yii::$app->getSession()->getFlash('captcha_form_data');
+
+            $js = <<<JS
+                var captcha_form_data = $captcha_form_data;
+                for (k1 in captcha_form_data) {
+                    for (k2 in captcha_form_data[k1]) {
+                        var key = "input[name='"+k1+"["+k2+"]']";
+                        $(key).val(captcha_form_data[k1][k2]);
+                    }
+                }
+
+                $("input[name='Captcha[verifyCode]']").attr('placeholder', '错误');
+
+                $("input[name='Captcha[verifyCode]']").css({"border-color":"red"});
+
+JS;
+
+            $view->registerJs($js, \yii\web\View::POS_LOAD);
+        }
     }
 
     /**

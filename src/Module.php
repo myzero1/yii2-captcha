@@ -22,11 +22,8 @@ class Module extends \yii\base\Module implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $app->params['captchaModel'] = new \myzero1\captcha\models\Captcha();
-        $app->attachBehavior('PreventMultipleSubmissions1',[
-            // 'class' => backend\behaviors\PreventMultipleSubmissionsBehavior::class,
-                'class' => \myzero1\captcha\behaviors\PreventMultipleSubmissionsBehavior::class,
-                'excludedRoutes' => []
+        $app->attachBehavior('captchaValidateBehavior',[
+                'class' => \myzero1\captcha\behaviors\CaptchaValidateBehavior::class,
             ]
         );
 
