@@ -26,7 +26,8 @@ $model = new backend\models\LoginForm();
         <?= $form->field($model,'username')->textInput() ?>
 
         <?php echo  $form
-            ->field(new \myzero1\captcha\models\Captcha(['scenario'=>'php']),'verifyCode')
+            // ->field(new \myzero1\captcha\models\Captcha(['scenario'=>'php']),'verifyCode')
+            ->field(new \myzero1\captcha\models\Captcha(['scenario'=>'jsPhp']),'verifyCode')
             ->widget(
                 myzero1\captcha\widgets\Captcha::className(),
                 [
