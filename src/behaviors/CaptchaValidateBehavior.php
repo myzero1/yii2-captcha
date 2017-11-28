@@ -46,8 +46,10 @@ class CaptchaValidateBehavior extends Behavior
 
                     $postJson = Json::encode($post);
                     Yii::$app->getSession()->setFlash('captcha_form_data', $postJson);
-                    $url = '/' . \Yii::$app->requestedRoute;
+                    // $url = '/' . \Yii::$app->requestedRoute;
+                    $url = \Yii::$app->request->getHostInfo() . '/' . \Yii::$app->requestedRoute;
                     \Yii::$app->response->redirect($url)->send();
+                    exit;
                 }
             }
         }
