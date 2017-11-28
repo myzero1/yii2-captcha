@@ -20,17 +20,16 @@ class DefaultController extends Controller
             //    ],  //默认的写法
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
-                // 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-                // 'backColor'=>0x000000,//背景颜色
-                'maxLength' => 3, //最大显示个数
-                'minLength' => 3,//最少显示个数
-                // 'padding' => 5,//间距
-                // 'height'=>40,//高度
-                // 'width' => 130,  //宽度
-                // 'foreColor'=>0xffffff,     //字体颜色
-                // 'offset'=>4,        //设置字符偏移量 有效果
-                // 'transparent'=>true,        //设置字符偏移量 有效果
-                //'controller'=>'login',        //拥有这个动作的controller
+                'fixedVerifyCode' => $this->module->fixedVerifyCode,
+                'backColor'=> $this->module->backColor,//背景颜色
+                'maxLength' => $this->module->maxLength, //最大显示个数
+                'minLength' => $this->module->minLength,//最少显示个数
+                'padding' => $this->module->padding,//间距
+                'height'=> $this->module->height,//高度
+                'width' => $this->module->width,  //宽度
+                'foreColor' => $this->module->foreColor,     //字体颜色
+                'offset' => $this->module->offset,        //设置字符偏移量 有效果
+                'transparent' => $this->module->transparent,        //设置字符偏移量 有效果
             ],
 		];
 	}
@@ -41,7 +40,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        var_dump($this->module);exit;
+        var_dump($this->module->sController);exit;
         return $this->render('index');
     }
 
