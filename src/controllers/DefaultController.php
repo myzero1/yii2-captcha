@@ -3,7 +3,6 @@
 namespace myzero1\captcha\controllers;
 
 use yii\web\Controller;
-use Gregwar\Captcha\CaptchaBuilder;
 
 /**
  * Default controller for the `captcha` module
@@ -13,11 +12,6 @@ class DefaultController extends Controller
     public function actions()
     {
         return  [
-            // 'captcha' =>
-            //    [
-            //        'class' => 'yii\captcha\CaptchaAction',
-            //        'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            //    ],  //默认的写法
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => $this->module->fixedVerifyCode,
@@ -40,21 +34,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        var_dump($this->module->sController);exit;
         return $this->render('index');
-    }
-
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
-    public function actionCaptcha1()
-    {
-        $builder = new CaptchaBuilder;
-        $builder->build();
-        $_SESSION['phrase'] = $builder->getPhrase();
-        header('Content-type: image/jpeg');
-        $builder->output();
     }
 
     /**

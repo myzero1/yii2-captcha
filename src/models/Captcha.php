@@ -33,5 +33,4 @@ class Captcha extends Model
             'verifyCode' => Yii::t('app', '验证码'),
         ];
     }
-
 }

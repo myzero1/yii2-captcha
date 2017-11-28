@@ -67,7 +67,8 @@ class Captcha extends InputWidget
      * The action represented by this route must be an action of [[CaptchaAction]].
      * Please refer to [[\yii\helpers\Url::toRoute()]] for acceptable formats.
      */
-    public $captchaAction = 'site/captcha';
+    // public $captchaAction = 'site/captcha';
+    public $captchaAction = '/captcha/default/captcha';
     /**
      * @var array HTML attributes to be applied to the CAPTCHA image tag.
      * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
@@ -137,6 +138,8 @@ class Captcha extends InputWidget
             $captcha_form_data = Yii::$app->getSession()->getFlash('captcha_form_data');
 
             $js = <<<JS
+
+            console.log(11);
                 var captcha_form_data = $captcha_form_data;
                 for (k1 in captcha_form_data) {
                     for (k2 in captcha_form_data[k1]) {

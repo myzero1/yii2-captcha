@@ -25,21 +25,19 @@ $model = new backend\models\LoginForm();
 
         <?= $form->field($model,'username')->textInput() ?>
 
-<?php
-// $model2 = new \myzero1\captcha\models\Captcha(['scenario'=>'php']);
-// $model2 = new \myzero1\captcha\models\Captcha();
-
-// var_dump($model2);
-
-// $model2->scenario = 'onlyPHP';
-
-// var_dump($model2);
-
-?>
-
-  	<?= $form->field(new \myzero1\captcha\models\Captcha(['scenario'=>'jsPhp']),'verifyCode')->widget(myzero1\captcha\widgets\Captcha::className()
-                                        ,['captchaAction'=>'/captcha/default/captcha',
-                                        'imageOptions'=>['alt'=>'点击换图','title'=>'点击换图', 'style'=>'cursor:pointer']]);?>
+        <?php echo  $form
+            ->field(new \myzero1\captcha\models\Captcha(['scenario'=>'php']),'verifyCode')
+            ->widget(
+                myzero1\captcha\widgets\Captcha::className(),
+                [
+                    'imageOptions'=>[
+                        'alt'=>'点击换图',
+                        'title'=>'点击换图',
+                        'style'=>'cursor:pointer'
+                    ]
+                ]
+            )
+        ?>
 
 
         </div>
