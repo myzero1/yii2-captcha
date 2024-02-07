@@ -11,16 +11,18 @@ use yii\web\ForbiddenHttpException;
  */
 class Module extends \yii\base\Module implements BootstrapInterface
 {
-    public $fixedVerifyCode = YII_ENV_TEST ? 'testme' : null;
-    public $backColor = 0x000000;//背景颜色
-    public $maxLength = 3; //最大显示个数
-    public $minLength = 3;//最少显示个数
-    public $padding = 5;//间距
-    public $height = 40;//高度
-    public $width = 80;  //宽度
-    public $foreColor = 0xffffff;     //字体颜色
-    public $offset = 4;        //设置字符偏移量 有效果
-    public $transparent = false;        //设置字符偏移量 有效果
+    public $maxLength = 6; //最大显示个数
+    public $minLength = 6; //最少显示个数
+    public $timeout = 300; //过期时间，单位为秒
+    public $key = 'myzero1自研'; //用于验证码加密
+    public $source = '0123456789abcdefghijklmnopqrstuvwxyz'; //候选字符，不支持中文的图片渲染，但支持生成中文验证码
+    public $width = 130;  //宽度
+    public $height = 32; //高度
+    public $backColor = '#dddddd'; //背景颜色,六位的rgb
+    public $fontSize = 14; //字体大小
+    public $startLeftTopPoint = [10,5]; //字符起点的左上角坐标
+    public $noiseSpot = 50; //干扰点数量
+    public $noiseLine = 3; //干扰线数量
 
     /**
      * @inheritdoc
