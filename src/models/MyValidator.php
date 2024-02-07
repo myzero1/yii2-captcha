@@ -13,15 +13,25 @@ class MyValidator extends Validator
         $message = json_encode($this->message, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         $js = <<<JS
             var value = $('input[name="{$model->formName()}[{$attribute}]"]').val();
+            var ing='验证中...'
 
             if (window.z1CaptchaValidate!=undefined) {
-                console.log('window.z1CaptchaValidate',window.z1CaptchaValidate)
+                // console.log('window.z1CaptchaValidate',window.z1CaptchaValidate)
                 if (window.z1CaptchaValidate!=1) {
                     messages.push({$message})
                 }
                 window.z1CaptchaValidate=undefined
             } else {
-                messages.push('验证中,请确认正确')
+                messages.push(ing)
+
+                setInterval(() => {
+                    var next=$('input[name="{$model->formName()}[{$attribute}]"]').next()
+                    if (next.length>0 && next.text()==ing) {
+                        $('input[name="{$model->formName()}[{$attribute}]"]').focus()
+                        $('input[name="{$model->formName()}[{$attribute}]"]').blur()
+                    }
+                }, 1000);
+
                 $.ajax({
                     url: '{$this->captchaValidateAction}',
                     type: 'GET',
@@ -31,16 +41,10 @@ class MyValidator extends Validator
                     success: function(response) {
                         // 处理成功响应
                         window.z1CaptchaValidate=response
-
-                        $('input[name="{$model->formName()}[{$attribute}]"]').focus()
-                        $('input[name="{$model->formName()}[{$attribute}]"]').blur()
                     },
                     error: function(xhr, status, error) {
                         // 处理错误响应
                         window.z1CaptchaValidate=error
-                        
-                        $('input[name="{$model->formName()}[{$attribute}]"]').focus()
-                        $('input[name="{$model->formName()}[{$attribute}]"]').blur()
                     }
                 });
             }
