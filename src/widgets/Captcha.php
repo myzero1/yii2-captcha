@@ -94,8 +94,6 @@ class Captcha extends InputWidget
     {
         parent::init();
 
-        static::checkRequirements();
-
         if (!isset($this->imageOptions['id'])) {
             $this->imageOptions['id'] = $this->options['id'] . '-image';
         }
@@ -106,7 +104,6 @@ class Captcha extends InputWidget
      */
     public function run()
     {
-        $this->registerClientScript();
         $input = $this->renderInputHtml('text');
         $route = $this->captchaAction;
         if (is_array($route)) {
@@ -114,91 +111,11 @@ class Captcha extends InputWidget
         } else {
             $route = [$route, 'v' => uniqid()];
         }
+        $this->imageOptions['onclick']='this.src=this.src';
         $image = Html::img($route, $this->imageOptions);
         echo strtr($this->template, [
             '{input}' => $input,
             '{image}' => $image,
         ]);
-    }
-
-    /**
-     * Registers the needed JavaScript.
-     */
-    public function registerClientScript()
-    {
-        $options = $this->getClientOptions();
-        $options = empty($options) ? '' : Json::htmlEncode($options);
-        $id = $this->imageOptions['id'];
-        $view = $this->getView();
-        CaptchaAsset::register($view);
-        $view->registerJs("jQuery('#$id').yiiCaptcha($options);");
-
-        //add by myzero1 for fill the input
-        if (Yii::$app->getSession()->getFlash('captcha_form_data')) {
-            $captcha_form_data = Yii::$app->getSession()->getFlash('captcha_form_data');
-
-            $js = <<<JS
-
-            console.log(11);
-                var captcha_form_data = $captcha_form_data;
-                for (k1 in captcha_form_data) {
-                    for (k2 in captcha_form_data[k1]) {
-                        var key = "input[name='"+k1+"["+k2+"]']";
-                        $(key).val(captcha_form_data[k1][k2]);
-                    }
-                }
-
-                $("input[name='Captcha[verifyCode]']").attr('placeholder', '错误');
-
-                $("input[name='Captcha[verifyCode]']").css({"border-color":"red"});
-
-JS;
-
-            $view->registerJs($js, \yii\web\View::POS_LOAD);
-        }
-    }
-
-    /**
-     * Returns the options for the captcha JS widget.
-     * @return array the options
-     */
-    protected function getClientOptions()
-    {
-        $route = $this->captchaAction;
-        if (is_array($route)) {
-            $route[CaptchaAction::REFRESH_GET_VAR] = 1;
-        } else {
-            $route = [$route, CaptchaAction::REFRESH_GET_VAR => 1];
-        }
-
-        $options = [
-            'refreshUrl' => Url::toRoute($route),
-            'hashKey' => 'yiiCaptcha/' . trim($route[0], '/'),
-        ];
-
-        return $options;
-    }
-
-    /**
-     * Checks if there is graphic extension available to generate CAPTCHA images.
-     * This method will check the existence of ImageMagick and GD extensions.
-     * @return string the name of the graphic extension, either "imagick" or "gd".
-     * @throws InvalidConfigException if neither ImageMagick nor GD is installed.
-     */
-    public static function checkRequirements()
-    {
-        if (extension_loaded('imagick')) {
-            $imagickFormats = (new \Imagick())->queryFormats('PNG');
-            if (in_array('PNG', $imagickFormats, true)) {
-                return 'imagick';
-            }
-        }
-        if (extension_loaded('gd')) {
-            $gdInfo = gd_info();
-            if (!empty($gdInfo['FreeType Support'])) {
-                return 'gd';
-            }
-        }
-        throw new InvalidConfigException('Either GD PHP extension with FreeType support or ImageMagick PHP extension with PNG support is required.');
     }
 }

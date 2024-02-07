@@ -31,7 +31,8 @@ class Helper
         $maxLen=6, 
         $timeout=300,
         $key='myzero1自研',
-        $source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器'
+        // $source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器'
+        $source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     )
     {
         // myzero1\captcha\helpers::getVerifyCode()

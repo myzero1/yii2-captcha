@@ -9,24 +9,24 @@ use yii\web\Controller;
  */
 class DefaultController extends Controller
 {
-    public function actions()
-    {
-        return  [
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => $this->module->fixedVerifyCode,
-                'backColor'=> $this->module->backColor,//背景颜色
-                'maxLength' => $this->module->maxLength, //最大显示个数
-                'minLength' => $this->module->minLength,//最少显示个数
-                'padding' => $this->module->padding,//间距
-                'height'=> $this->module->height,//高度
-                'width' => $this->module->width,  //宽度
-                'foreColor' => $this->module->foreColor,     //字体颜色
-                'offset' => $this->module->offset,        //设置字符偏移量 有效果
-                'transparent' => $this->module->transparent,        //设置字符偏移量 有效果
-            ],
-		];
-	}
+    // public function actions()
+    // {
+    //     return  [
+    //         'captcha' => [
+    //             'class' => 'yii\captcha\CaptchaAction',
+    //             'fixedVerifyCode' => $this->module->fixedVerifyCode,
+    //             'backColor'=> $this->module->backColor,//背景颜色
+    //             'maxLength' => $this->module->maxLength, //最大显示个数
+    //             'minLength' => $this->module->minLength,//最少显示个数
+    //             'padding' => $this->module->padding,//间距
+    //             'height'=> $this->module->height,//高度
+    //             'width' => $this->module->width,  //宽度
+    //             'foreColor' => $this->module->foreColor,     //字体颜色
+    //             'offset' => $this->module->offset,        //设置字符偏移量 有效果
+    //             'transparent' => $this->module->transparent,        //设置字符偏移量 有效果
+    //         ],
+	// 	];
+	// }
 
     /**
      * Renders the index view for the module
@@ -49,6 +49,37 @@ class DefaultController extends Controller
             return $this->render('demo');
         }
 
+    }
+
+    public function actionCaptcha()
+    {
+        // 0x3c8dbc
+        // 'backColor' => 0x3c8dbc, //背景颜色
+        $bgColor='0x3c8dbc';
+        $bgColor='#d2d6de';
+
+        $code=\myzero1\captcha\helpers\Helper::getVerifyCode(
+            $minLen = 4,
+            $maxLen = 4,
+            $timeout = 300,
+            $key = 'myzero1自研',
+            $source = '0123456789abcdefghijklmnopqrstuvwxyz'
+        );
+        \myzero1\captcha\helpers\Helper::draw(
+            $code['code'],
+            100,
+            32,
+            [
+                hexdec(substr($bgColor,-6,2)),
+                hexdec(substr($bgColor,-4,2)),
+                hexdec(substr($bgColor,-2,2))
+            ],
+            $fontSize = 16,
+            $startLeftTopPoint = [10,5],
+            $noiseSpot = 1,
+            $noiseLine = 3
+        );
+        exit;
     }
 
 }

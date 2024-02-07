@@ -18,8 +18,10 @@ class Captcha extends Model
     public function rules()
     {
         return [
-            ['verifyCode','required', 'on' => 'php'],
-            ['verifyCode', 'captcha', 'captchaAction'=>'/captcha/default/captcha', 'on' => 'jsPhp'],
+            // ['verifyCode','required', 'on' => 'php'],
+            ['verifyCode','required', 'on' => 'jsPhp'],
+            ['verifyCode',MyValidator::className(),'captchaValidateAction'=>'/captcha/default/captcha','message' => 'This field must not be "test".', 'on' => 'jsPhp'],
+            // ['verifyCode', 'captcha', 'captchaAction'=>'/captcha/default/captcha', 'on' => 'jsPhp'],
         ];
     }
 
