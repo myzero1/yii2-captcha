@@ -15,12 +15,13 @@ class MyValidator extends Validator
             var value = $('input[name="{$model->formName()}[{$attribute}]"]').val();
 
             if (window.z1CaptchaValidate!=undefined) {
-                // console.log('window.z1CaptchaValidate',window.z1CaptchaValidate)
+                console.log('window.z1CaptchaValidate',window.z1CaptchaValidate)
                 if (window.z1CaptchaValidate!=1) {
                     messages.push({$message})
                 }
                 window.z1CaptchaValidate=undefined
             } else {
+                messages.push('请先确认验证码正确')
                 $.ajax({
                     url: '{$this->captchaValidateAction}',
                     type: 'GET',
