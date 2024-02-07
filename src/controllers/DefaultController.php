@@ -53,23 +53,21 @@ class DefaultController extends Controller
 
     public function actionCaptcha()
     {
-        // 0x3c8dbc
-        // 'backColor' => 0x3c8dbc, //背景颜色
-        $bgColor='0x3c8dbc';
-        $bgColor='#d2d6de';
+        $model=\Yii::$app->controller->module;
+        // var_dump($model);exit;
 
         $code=\myzero1\captcha\helpers\Helper::getVerifyCode(
-            $minLen = 4,
-            $maxLen = 4,
-            $timeout = 300,
-            $key = 'myzero1自研',
-            $source = '0123456789abcdefghijklmnopqrstuvwxyz'
+            $minLen = $model->minLen,
+            $maxLen = $model->maxLen,
+            $timeout = $model->timeout,
+            $key = $model->key,
+            $source = $model->source
         );
 
         setcookie(
             $name='Z1captchaId',
             $value = $code['id'],
-            $expires_or_options = time() + 300,
+            $expires_or_options = time() + $model->timeout,
             $path = "",
             $domain = "",
             $secure = false,
@@ -78,17 +76,17 @@ class DefaultController extends Controller
 
         \myzero1\captcha\helpers\Helper::draw(
             $code['code'],
-            100,
-            32,
+            $model->width ,
+            $model->height ,
             [
-                hexdec(substr($bgColor,-6,2)),
-                hexdec(substr($bgColor,-4,2)),
-                hexdec(substr($bgColor,-2,2))
+                hexdec(substr($model->bgColor,-6,2)),
+                hexdec(substr($model->bgColor,-4,2)),
+                hexdec(substr($model->bgColor,-2,2))
             ],
-            $fontSize = 16,
-            $startLeftTopPoint = [10,5],
-            $noiseSpot = 1,
-            $noiseLine = 3
+            $fontSize = $model->fontSize,
+            $startLeftTopPoint = $model->startLeftTopPoint,
+            $noiseSpot = $model->noiseSpot,
+            $noiseLine = $model->noiseLine
         );
         exit;
     }
@@ -115,11 +113,12 @@ class DefaultController extends Controller
             exit;
         }
 
+        $model=\Yii::$app->controller->module;
         $ok=\myzero1\captcha\helpers\Helper::validate(
             $id=$captchaId,
             $code=$code,
-            $timeout = 300,
-            $key = 'myzero1自研'
+            $timeout = $model->timeout,
+            $key = $model->key
         );
         if(!$ok){
             echo 0;
