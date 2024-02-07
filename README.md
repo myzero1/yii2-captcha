@@ -37,16 +37,18 @@ return [
     'modules' => [
         'captcha' => [
             'class' => 'myzero1\captcha\Module',
-            // 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            // 'backColor' => 0x605ca8,//背景颜色
-            // 'maxLength' => 3, //最大显示个数
-            // 'minLength' => 3,//最少显示个数
-            // 'padding' => 5,//间距
-            // 'height' => 40,//高度
-            // 'width' => 80,  //宽度
-            // 'foreColor' => 0xffffff,     //字体颜色
-            // 'offset' => 4,        //设置字符偏移量 有效果
-            // 'transparent' => false,        //设置字符偏移量 有效果
+            // 'maxLen' => 4, //最大显示个数
+            // 'minLen' => 4, //最少显示个数
+            // 'timeout' => 300, //过期时间，单位为秒
+            // 'key' => 'myzero1自研', //用于验证码加密
+            // 'source' => '0123456789abcdefghijklmnopqrstuvwxyz', //候选字符，不支持中文的图片渲染，但支持生成中文验证码
+            // 'width' => 130,  //宽度
+            // 'height' => 32, //高度
+            // 'bgColor' => '#dddddd', //背景颜色,六位的rgb
+            // 'fontSize' => 24, //字体大小,最大值是 5,这个值对应于 14 像素的字体大小,越大字间距越大
+            // 'startLeftTopPoint' => [10,5], //字符起点的左上角坐标
+            // 'noiseSpot' => 50, //干扰点数量
+            // 'noiseLine' => 3, //干扰线数量
         ],
         // ...
     ],
