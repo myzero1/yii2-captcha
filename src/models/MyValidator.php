@@ -21,7 +21,7 @@ class MyValidator extends Validator
                 }
                 window.z1CaptchaValidate=undefined
             } else {
-                messages.push('请先确认验证码正确')
+                messages.push('验证中,请确认正确')
                 $.ajax({
                     url: '{$this->captchaValidateAction}',
                     type: 'GET',
