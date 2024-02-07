@@ -65,6 +65,17 @@ class DefaultController extends Controller
             $key = 'myzero1自研',
             $source = '0123456789abcdefghijklmnopqrstuvwxyz'
         );
+
+        setcookie(
+            $name='Z1captchaId',
+            $value = $code['id'],
+            $expires_or_options = time() + 300,
+            $path = "",
+            $domain = "",
+            $secure = false,
+            $httponly = true
+        );
+
         \myzero1\captcha\helpers\Helper::draw(
             $code['code'],
             100,
@@ -79,6 +90,43 @@ class DefaultController extends Controller
             $noiseSpot = 1,
             $noiseLine = 3
         );
+        exit;
+    }
+
+    public function actionCaptchaValidate()
+    {
+        $code=\Yii::$app->request->get('code','');
+        if (!$code) {
+            echo 0;
+            exit;
+        }
+
+        $cookie=\Yii::$app->request->headers->get('cookie');
+        $info=explode(';',$cookie);
+        $flag='Z1captchaId=';
+        $captchaId='';
+        foreach ($info as $k => $v) {
+            if (strpos($v,$flag)!==false) {
+                $captchaId=str_replace($flag,'',$v);
+            }
+        }
+        if (!$captchaId) {
+            echo 0;
+            exit;
+        }
+
+        $ok=\myzero1\captcha\helpers\Helper::validate(
+            $id=$captchaId,
+            $code=$code,
+            $timeout = 300,
+            $key = 'myzero1自研'
+        );
+        if(!$ok){
+            echo 0;
+            exit;
+        }
+
+        echo 1;
         exit;
     }
 
