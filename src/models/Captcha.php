@@ -20,7 +20,7 @@ class Captcha extends Model
         return [
             // ['verifyCode','required', 'on' => 'php'],
             ['verifyCode','required', 'on' => 'jsPhp'],
-            ['verifyCode',MyValidator::className(),'captchaValidateAction'=>'/captcha/default/captcha','message' => 'This field must not be "test".', 'on' => 'jsPhp'],
+            ['verifyCode',MyValidator::className(),'captchaValidateAction'=>'/captcha/default/captcha-validate','message' => '验证码错误', 'on' => 'jsPhp'],
             // ['verifyCode', 'captcha', 'captchaAction'=>'/captcha/default/captcha', 'on' => 'jsPhp'],
         ];
     }
