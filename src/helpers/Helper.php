@@ -87,5 +87,81 @@ class Helper
         return $ok;
     }
 
+    /**
+     * @param string $code 1QUC
+     * @return 
+     */
+    public static function draw($code)
+    {
+        $code='123aE6';
+        $width = 100;
+        $height = 30;
+        $bgColour= [255, 255, 255]; // rgb
+        $fontSize = 14; // 字体大小
+        $startLeftTopPoint = [10,5];
+        $noiseSpot = 50;
+        $noiseLine = 3;
+        $imgFile = 't.png';
+
+        $colors=[];
+        for ($i=0; $i < 3; $i++) { 
+            $colors[$i]=self::randRgbColor();
+        }
+
+        $image = imagecreate($width, $height);
+        $bgColor = imagecolorallocate($image, $bgColour[0], $bgColour[1], $bgColour[2]);
+        imagefilledrectangle($image, 0, 0, $width, $height, $bgColor);
+
+        $len=mb_strlen($code, 'UTF-8');
+        for ($i=0; $i < $len; $i++) {
+            // $randomNumber = mt_rand(0, $sourceLen-1);
+            // $code.=mb_substr($source, $randomNumber, 1, 'UTF-8');
+            $color=$colors[mt_rand(0, 2)];
+            $textColor = imagecolorallocate($image, $color[0], $color[1], $color[2]);
+            $chart=mb_substr($code, $i, 1, 'UTF-8');
+
+            $x=$i*$fontSize + $startLeftTopPoint[0]+mt_rand(0-$fontSize/2, $fontSize/2);
+            $y=mt_rand($startLeftTopPoint[1], $height-3*$startLeftTopPoint[1]);
+            // $y=$startLeftTopPoint[1];
+
+            imagestring($image, $fontSize, $x, $y, $chart, $textColor);
+        }
+
+        for ($i=0; $i < $noiseSpot; $i++) { 
+            $color=$colors[mt_rand(0, 2)];
+            $textColor = imagecolorallocate($image, $color[0], $color[1], $color[2]);
+            imagesetpixel($image, rand(0, $width), rand(0, $height), $textColor);
+        }
+
+        for ($i=0; $i < $noiseLine; $i++) { 
+            $color=$colors[mt_rand(0, 2)];
+            $textColor = imagecolorallocate($image, $color[0], $color[1], $color[2]);
+            imageline($image, 0, rand(0, $height), $width, rand(0, $height), $textColor);
+        }
+        
+        if ($imgFile=='') {
+            header('Content-type: image/png');
+            imagepng($image);
+        } else {
+            if (file_exists($imgFile)) {
+                unlink($imgFile);
+            }
+            
+            imagepng($image,$imgFile);
+        }
+
+        imagedestroy($image);
+    }
+
+    public static function randRgbColor()
+    {
+        $color=[];
+        for ($i=0; $i < 3; $i++) { 
+            $color[$i]=mt_rand(0, 255);
+        }
+        
+        return $color;
+    }
+
 
 }
