@@ -26,9 +26,9 @@ class Helper
      * @param string $source 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器
      * @return array $data ['id'=>'e539595922a2f20ac152f3597ccce86a','code'=>'1QUC',]
      */
-    public static function genCaptcha($minLen=4,$maxLen=6, $timeout=300,$key='myzero1自研',$source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器')
+    public static function getVerifyCode($minLen=4,$maxLen=6, $timeout=300,$key='myzero1自研',$source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器')
     {
-        // myzero1\captcha\helpers::genCaptcha()
+        // myzero1\captcha\helpers::getVerifyCode()
         // $source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器';
         // $minLen=4;
         // $maxLen=4;
@@ -60,47 +60,32 @@ class Helper
     }
 
     /**
-     * @param int $timestamp 1552886962 the will be convered timestamp.
-     * @return string 2019-03-23 19:10:23
+     * @param string $id e539595922a2f20ac152f3597ccce86a
+     * @param string $code 1QUC
+     * @param int $timeout 300
+     * @param string $key myzero1自研
+     * @return bool $ok true
      */
-    public static function time2string($timestamp,$format='Y-m-d H:i:s')
+    public static function validate($id,$code,$timeout=300,$key='myzero1自研')
     {
-        if (empty($timestamp)) {
-            return '';
-        } else {
-            if (self::isTimestamp($timestamp)) {
-                return date($format, intval($timestamp));
-            } else {
-                return '';
-            }
+        // $id='e539595922a2f20ac152f3597ccce86a';
+        // $code='1QUC';
+
+        $mod=intval(time()/$timeout);
+        $str1=sprintf('%s_%s_%s',$code,$key,$mod);
+        $str2=sprintf('%s_%s_%s',$code,$key,$mod+1);
+        $id1=md5($str1);
+        $id2=md5($str2);
+
+        $ok=false;
+        if ($id===$id1 || $id===$id2) {
+            $ok=true;
         }
+
+        // var_dump($ok);exit;
+
+        return $ok;
     }
 
-    /**
-     * @param string $string 2019-03-23 19:10:23
-     * @return int 1552886962
-     */
-    public static function string2time($string)
-    {
-        if (empty($string)) {
-            return 0;
-        } else {
-            return strtotime($string);
-        }
-    }
-
-    /**
-     * @param mixed $timestamp .
-     * @return bool
-     */
-    public static function isTimestamp($timestamp)
-    {
-        $timestamp = intval($timestamp);
-        if (strtotime(date('Y-m-d H:i:s', $timestamp)) === $timestamp) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }
