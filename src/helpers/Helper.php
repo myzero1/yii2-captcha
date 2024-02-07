@@ -26,7 +26,13 @@ class Helper
      * @param string $source 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器
      * @return array $data ['id'=>'e539595922a2f20ac152f3597ccce86a','code'=>'1QUC',]
      */
-    public static function getVerifyCode($minLen=4,$maxLen=6, $timeout=300,$key='myzero1自研',$source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器')
+    public static function getVerifyCode(
+        $minLen=4,
+        $maxLen=6, 
+        $timeout=300,
+        $key='myzero1自研',
+        $source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器'
+    )
     {
         // myzero1\captcha\helpers::getVerifyCode()
         // $source='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ我是中国人这是myzero1自研的验证码验证器';
@@ -88,20 +94,30 @@ class Helper
     }
 
     /**
-     * @param string $code 1QUC
+     * @param string $code 1QUC 不支持中文绘图
      * @return 
      */
-    public static function draw($code)
+    public static function draw(
+        $code,
+        $width = 100,
+        $height = 30,
+        $bgColour= [255, 255, 255],
+        $fontSize = 14,
+        $startLeftTopPoint = [10,5],
+        $noiseSpot = 50,
+        $noiseLine = 3,
+        $imgFile = ''
+    )
     {
-        $code='123aE6';
-        $width = 100;
-        $height = 30;
-        $bgColour= [255, 255, 255]; // rgb
-        $fontSize = 14; // 字体大小
-        $startLeftTopPoint = [10,5];
-        $noiseSpot = 50;
-        $noiseLine = 3;
-        $imgFile = 't.png';
+        // $code='123aE6';
+        // $width = 100;
+        // $height = 30;
+        // $bgColour= [255, 255, 255]; // rgb
+        // $fontSize = 14; // 字体大小
+        // $startLeftTopPoint = [10,5];
+        // $noiseSpot = 50;
+        // $noiseLine = 3;
+        // $imgFile = 't.png';
 
         $colors=[];
         for ($i=0; $i < 3; $i++) { 
