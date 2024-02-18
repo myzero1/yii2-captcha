@@ -15,40 +15,34 @@ class MyValidator extends Validator
             var value = $('input[name="{$model->formName()}[{$attribute}]"]').val();
             var ing='验证中...'
 
-            if (window.z1CaptchaValidate!=undefined) {
-                // console.log('window.z1CaptchaValidate',window.z1CaptchaValidate)
-                if (window.z1CaptchaValidate!=1) {
-                    messages.push({$message})
+            // console.log(messages)
+            messages.pop()
+            messages.push(ing)
+
+            $.ajax({
+                url: '{$this->captchaValidateAction}',
+                type: 'GET',
+                async: false, // 设置为同步请求
+                data: {
+                    code: value
+                },
+                success: function(response) {
+                    // 处理成功响应
+                    if (response!=1) {
+                        messages.pop()
+                        messages.push({$message})
+                    } else {
+                        messages.pop()
+                        messages.pop()
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // 处理错误响应
+                    messages.pop()
+                    messages.push('xhr err')
+                    console.log(error)
                 }
-                window.z1CaptchaValidate=undefined
-            } else {
-                messages.push(ing)
-
-                setInterval(() => {
-                    var next=$('input[name="{$model->formName()}[{$attribute}]"]').next()
-                    if (next.length>0 && next.text()==ing) {
-                        $('input[name="{$model->formName()}[{$attribute}]"]').focus()
-                        $('input[name="{$model->formName()}[{$attribute}]"]').blur()
-                    }
-                }, 1000);
-
-                $.ajax({
-                    url: '{$this->captchaValidateAction}',
-                    type: 'GET',
-                    data: {
-                        code: value
-                    },
-                    success: function(response) {
-                        // 处理成功响应
-                        window.z1CaptchaValidate=response
-                    },
-                    error: function(xhr, status, error) {
-                        // 处理错误响应
-                        window.z1CaptchaValidate=error
-                    }
-                });
-            }
-
+            });
 JS;
         return new JsExpression($js);
     }
