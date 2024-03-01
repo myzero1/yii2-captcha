@@ -107,7 +107,8 @@ class Helper
         $startLeftTopPoint = [10,5],
         $noiseSpot = 50,
         $noiseLine = 3,
-        $imgFile = ''
+        $imgFile = '',
+        $base64 = false
     )
     {
         // $code='123aE6';
@@ -155,17 +156,35 @@ class Helper
             $textColor = imagecolorallocate($image, $color[0], $color[1], $color[2]);
             imageline($image, 0, rand(0, $height), $width, rand(0, $height), $textColor);
         }
-        
-        if ($imgFile=='') {
-            header('Content-type: image/png');
-            imagepng($image);
-        } else {
+
+        if ($imgFile!=='') {
             if (file_exists($imgFile)) {
                 unlink($imgFile);
             }
             
             imagepng($image,$imgFile);
+
+            imagedestroy($image);
+            return;
         }
+
+        if ($base64) {
+            // 在内存中将图像保存为 PNG 格式，并将其输出到变量
+            ob_start(); // 启动输出缓冲
+            imagepng($image); // 将图像输出到输出缓冲
+            $pngData = ob_get_contents(); // 从输出缓冲中获取数据
+            ob_end_clean(); // 关闭并清空输出缓冲
+            
+            imagedestroy($image);
+
+            $base64Img=sprintf('data:image/png;base64,%s',base64_encode($pngData));
+
+            return $base64Img;
+        } 
+        
+        header('Content-type: image/png');
+
+        imagepng($image);
 
         imagedestroy($image);
     }
@@ -179,6 +198,4 @@ class Helper
         
         return $color;
     }
-
-
 }
